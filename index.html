@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像から文字生成</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- TensorFlow.jsを読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+    <!-- BodyPixモデルを読み込み（人物の骨格・輪郭検出用） -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0/dist/body-pix.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>画像から文字生成アプリ</h1>
+        
+        <div class="upload-section">
+            <h2>画像をアップロード</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <p>または画像を下記エリアにドラッグ＆ドロップ</p>
+            <div id="dropArea" class="drop-area">
+                <p>ここに画像をドロップ</p>
+            </div>
+            <button id="processButton" disabled>画像を処理</button>
+        </div>
+        
+        <div class="result-section">
+            <div class="image-container">
+                <h2>元の画像</h2>
+                <div id="originalImageContainer">
+                    <img id="originalImage" style="display: none;">
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <h2>検出された特徴</h2>
+                <div id="featureImageContainer">
+                    <canvas id="featureCanvas"></canvas>
+                </div>
+            </div>
+            
+            <div class="character-container">
+                <h2>生成された文字</h2>
+                <div id="generatedCharContainer">
+                    <p id="generatedChar"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h2>このアプリについて</h2>
+            <p>このアプリは、アップロードされた画像から物体の骨格・輪郭・筋などの特徴を抽出し、それを文字として解釈します。</p>
+            <p>これにより、自然界の形状が現代の文字とどのように関連しているかを探ることができます。</p>
+        </div>
+    </div>
+
+    <script src="imageProcessor.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
