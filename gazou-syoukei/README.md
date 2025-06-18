@@ -1,63 +1,105 @@
-# 画像から象形文字ジェネレーター (ChatGPT版)
+# 画像から象形文字ジェネレーター
 
-このアプリケーションは、入力された画像から特徴を抽出し、象形文字のような画像を生成します。さらに、ChatGPT APIを使用して、生成された象形文字の説明文を自動的に作成します。
+画像を解析し、ChatGPT APIを使用して象形文字風のイラストと説明を生成するPythonアプリケーションです。
 
 ## 機能
 
-- 画像ファイルの選択
-- 画像から特徴（輪郭）の抽出
-- ChatGPT APIを使用した象形文字の説明文生成
-- 象形文字のような画像の生成
-- 生成された画像の保存
+- 画像の輪郭を抽出して象形文字風に変換
+- ChatGPT APIを使用して象形文字の説明を自動生成
+- GUIで簡単に操作可能
+- 変換結果をPNG形式で保存
 
-## 必要条件
+## 必要な環境
 
-- Python 3.6以上
-- OpenCV
-- NumPy
-- Pillow (PIL)
-- OpenAI Python ライブラリ
-- OpenAI APIキー
+- Python 3.9以上
+- tkinterサポート付きのPython
 
 ## インストール方法
 
-1. リポジトリをクローンまたはダウンロードします
-2. 必要なライブラリをインストールします：
+### 1. リポジトリのクローン
 
+```bash
+git clone https://github.com/yourusername/gazou-syoukei.git
+cd gazou-syoukei
 ```
+
+### 2. 依存ライブラリのインストール
+
+```bash
 pip install -r requirements.txt
 ```
 
-## 使用方法
+または個別にインストール：
 
-1. アプリケーションを起動します：
-
-```
-python fixed_main.py
+```bash
+pip install opencv-python pillow numpy openai
 ```
 
-2. OpenAI APIキーを入力して「保存」ボタンをクリックします
-3. 「画像を選択」ボタンをクリックして、変換したい画像を選択します
-4. 「象形文字に変換」ボタンをクリックして、画像を変換します
-5. 生成された象形文字と説明文が表示されます
-6. 「画像を保存」ボタンをクリックして、生成された象形文字画像を保存します
+## OpenAI APIキーの設定
 
-## 仕組み
+このアプリケーションはChatGPT APIを使用するため、OpenAI APIキーが必要です。
 
-1. 入力画像からエッジを検出します（Cannyエッジ検出）
-2. 検出されたエッジから輪郭を抽出します
-3. 最も大きな輪郭を選択し、単純化します
-4. 輪郭の特徴（点の数、面積、周囲長など）を抽出します
-5. 抽出した特徴とファイル名をChatGPT APIに送信して、象形文字の説明文を生成します
-6. 単純化された輪郭を使用して、象形文字のような画像を生成します
-7. 生成された象形文字と説明文を表示します
+1. [OpenAI](https://platform.openai.com/api-keys)でAPIキーを取得
+2. `main.py`を開き、ファイルの先頭にある`OPENAI_API_KEY`に取得したAPIキーを設定
+   ```python
+   OPENAI_API_KEY = "your-api-key-here"  # ここに実際のAPIキーを入力
+   ```
+3. ファイルを保存してアプリケーションを実行
 
-## OpenAI APIキーについて
+## 実行方法
 
-このアプリケーションを使用するには、OpenAI APIキーが必要です。APIキーは以下の手順で取得できます：
+### 方法1: 通常のPython環境（推奨）
 
-1. [OpenAIのウェブサイト](https://platform.openai.com/)にアクセスしてアカウントを作成します
-2. APIキーを生成します
-3. アプリケーション起動後、APIキー入力欄にキーを入力して「保存」ボタンをクリックします
+```bash
+python3 main.py
+```
 
-APIキーは暗号化されずにローカルファイル（api_key.json）に保存されますので、取り扱いにご注意ください。
+### 方法2: tkinterエラーが出る場合
+
+macOSでtkinterが使えない場合は、システムのPythonを使用：
+
+```bash
+/usr/bin/python3 main.py
+```
+
+### 方法3: Homebrewでtkinter対応のPythonをインストール
+
+```bash
+# Python 3.11の場合
+brew install python-tk@3.11
+
+# その後、通常通り実行
+python3 main.py
+```
+
+## 使い方
+
+1. `main.py`の9行目にあるAPIキーを設定：
+   ```python
+   OPENAI_API_KEY = "sk-your-actual-api-key-here"
+   ```
+2. アプリケーションを起動
+3. 「画像を選択」ボタンをクリックして変換したい画像を選択
+4. 「象形文字に変換」ボタンをクリック
+5. 変換結果が右側に表示される
+6. 「画像を保存」ボタンで結果を保存
+
+## トラブルシューティング
+
+### tkinterエラーが出る場合
+
+```
+ModuleNotFoundError: No module named '_tkinter'
+```
+
+このエラーが出る場合は、上記の「方法2」または「方法3」を試してください。
+
+### OpenCVやPillowがインストールできない場合
+
+```bash
+# pipをアップグレード
+pip install --upgrade pip
+
+# 再度インストール
+pip install -r requirements.txt
+```
